@@ -20,3 +20,5 @@ To view or modify,load the JDM json file into https://editor.gorules.io/
 
 ### Sample Contract Clause for Volume Discount
 ![cumulative-discount](./cumulative-discount/cumulative-discount.png)
+
+![cumulative-discount-table](./cumulative-discount/cumulative-discount-table.png)
