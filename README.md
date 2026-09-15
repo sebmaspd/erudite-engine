@@ -10,4 +10,9 @@ https://github.com/gorules/zen
 3. write Makefile to build "add" and "hourly-haze", binaries and JDM files will be saved to @/bin
 4. list all previous prompts to @README.md "Prompts" section
 
+## JDM on-line editor
+
+To view or modify,load the JDM json file into https://editor.gorules.io/  
+
+![jdm-screenshot](./jdm-screenshot.png)
 
