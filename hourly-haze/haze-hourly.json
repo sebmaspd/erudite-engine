@@ -1,0 +1,58 @@
+{
+  "contentType": "application/vnd.gorules.decision",
+  "nodes": [
+    {
+      "id": "input",
+      "type": "inputNode",
+      "name": "request",
+      "position": { "x": 0, "y": 0 }
+    },
+    {
+      "id": "haze-band",
+      "type": "decisionTableNode",
+      "name": "Haze Band",
+      "content": {
+        "hitPolicy": "first",
+        "inputs": [
+          { "id": "pm25", "name": "1-hr PM2.5 (µg/m3)", "field": "pm25" }
+        ],
+        "outputs": [
+          { "id": "hazeBand", "name": "Band", "field": "hazeBand" }
+        ],
+        "rules": [
+          {
+            "_id": "rule1",
+            "pm25": "<= 55",
+            "hazeBand": "'Normal → Normal activities allowed'"
+          },
+          {
+            "_id": "rule2",
+            "pm25": "[56..150]",
+            "hazeBand": "'Elevated → Reduce strenuous outdoor activity'"
+          },
+          {
+            "_id": "rule3",
+            "pm25": "[151..250]",
+            "hazeBand": "'High → Minimize strenuous outdoor activity'"
+          },
+          {
+            "_id": "rule4",
+            "pm25": ">= 251",
+            "hazeBand": "'Very High → Avoid all strenuous outdoor activity'"
+          }
+        ]
+      },
+      "position": { "x": 250, "y": 0 }
+    },
+    {
+      "id": "output",
+      "type": "outputNode",
+      "name": "response",
+      "position": { "x": 500, "y": 0 }
+    }
+  ],
+  "edges": [
+    { "id": "e1", "sourceId": "input", "targetId": "haze-band", "type": "edge" },
+    { "id": "e2", "sourceId": "haze-band", "targetId": "output", "type": "edge" }
+  ]
+}

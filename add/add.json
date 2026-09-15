@@ -1,0 +1,32 @@
+{
+  "contentType": "application/vnd.gorules.decision",
+  "nodes": [
+    {
+      "id": "input",
+      "type": "inputNode",
+      "name": "request",
+      "position": { "x": 0, "y": 0 }
+    },
+    {
+      "id": "sum",
+      "type": "expressionNode",
+      "name": "Sum",
+      "content": {
+        "expressions": [
+          { "id": "1", "key": "sum", "value": "a + b" }
+        ]
+      },
+      "position": { "x": 250, "y": 0 }
+    },
+    {
+      "id": "output",
+      "type": "outputNode",
+      "name": "response",
+      "position": { "x": 500, "y": 0 }
+    }
+  ],
+  "edges": [
+    { "id": "e1", "sourceId": "input", "targetId": "sum", "type": "edge" },
+    { "id": "e2", "sourceId": "sum", "targetId": "output", "type": "edge" }
+  ]
+}
