@@ -1,0 +1,90 @@
+{
+  "contentType": "application/vnd.gorules.decision",
+  "nodes": [
+    {
+      "id": "input",
+      "type": "inputNode",
+      "name": "request",
+      "position": { "x": 0, "y": 0 }
+    },
+    {
+      "id": "discount-tier",
+      "type": "decisionTableNode",
+      "name": "Discount Tier",
+      "content": {
+        "hitPolicy": "first",
+        "passThrough": true,
+        "inputs": [
+          { "id": "purchaseVolume", "name": "Purchase Volume (units)", "field": "purchaseVolume" }
+        ],
+        "outputs": [
+          { "id": "unitPrice", "name": "Unit Price", "field": "unitPrice" },
+          { "id": "discount", "name": "Discount", "field": "discount" }
+        ],
+        "rules": [
+          {
+            "_id": "rule1",
+            "purchaseVolume": "< 500",
+            "unitPrice": "50",
+            "discount": "0"
+          },
+          {
+            "_id": "rule2",
+            "purchaseVolume": "[500..1499]",
+            "unitPrice": "50",
+            "discount": "0.05"
+          },
+          {
+            "_id": "rule3",
+            "purchaseVolume": "[1500..4999]",
+            "unitPrice": "50",
+            "discount": "0.1"
+          },
+          {
+            "_id": "rule4",
+            "purchaseVolume": ">= 5000",
+            "unitPrice": "50",
+            "discount": "0.15"
+          }
+        ]
+      },
+      "position": { "x": 250, "y": 0 }
+    },
+    {
+      "id": "net-unit-price",
+      "type": "expressionNode",
+      "name": "Net Unit Price",
+      "content": {
+        "passThrough": true,
+        "expressions": [
+          { "id": "1", "key": "netUnitPrice", "value": "unitPrice * (1 - discount)" }
+        ]
+      },
+      "position": { "x": 500, "y": 0 }
+    },
+    {
+      "id": "volume-discounted-price",
+      "type": "expressionNode",
+      "name": "Volume Discounted Price",
+      "content": {
+        "passThrough": true,
+        "expressions": [
+          { "id": "1", "key": "volumeDiscountedPrice", "value": "netUnitPrice * purchaseVolume" }
+        ]
+      },
+      "position": { "x": 750, "y": 0 }
+    },
+    {
+      "id": "output",
+      "type": "outputNode",
+      "name": "response",
+      "position": { "x": 1000, "y": 0 }
+    }
+  ],
+  "edges": [
+    { "id": "e1", "sourceId": "input", "targetId": "discount-tier", "type": "edge" },
+    { "id": "e2", "sourceId": "discount-tier", "targetId": "net-unit-price", "type": "edge" },
+    { "id": "e3", "sourceId": "net-unit-price", "targetId": "volume-discounted-price", "type": "edge" },
+    { "id": "e4", "sourceId": "volume-discounted-price", "targetId": "output", "type": "edge" }
+  ]
+}
